@@ -11,6 +11,7 @@ namespace BookingSystem.BuisnessLogic.Entities
         [MinLength(3)]        
         public string Name { get; set; }
 
+        //Hello Julia
     
 
     }
