@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{337C625C-5D0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D07D82AD-8E0B-45C3-8297-332E1C73719A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.BuisnessLogic", "BookingSystem.BuisnessLogic\BookingSystem.BuisnessLogic.csproj", "{47BB5135-9935-4BF8-93A9-52F1139A2BC0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.BuisnessLogic", "src\BookingSystem.BuisnessLogic\BookingSystem.BuisnessLogic.csproj", "{47BB5135-9935-4BF8-93A9-52F1139A2BC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.Infrastructure", "BookingSystem.Infrastructure\BookingSystem.Infrastructure.csproj", "{668CB386-2178-46A6-9A3A-0B3641439743}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.Infrastructure", "src\BookingSystem.Infrastructure\BookingSystem.Infrastructure.csproj", "{668CB386-2178-46A6-9A3A-0B3641439743}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.BuisnessLogic.Tests", "BookingSystem.BuisnessLogic.Tests\BookingSystem.BuisnessLogic.Tests.csproj", "{C49B4FEA-8D8D-4244-AF90-FDE25D5CB248}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.BuisnessLogic.Tests", "tests\BookingSystem.BuisnessLogic.Tests\BookingSystem.BuisnessLogic.Tests.csproj", "{C49B4FEA-8D8D-4244-AF90-FDE25D5CB248}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.Infrastructure.Tests", "BookingSystem.Infrastructure.Tests\BookingSystem.Infrastructure.Tests.csproj", "{193EA280-BA4B-480B-91EB-4EC0A58AA889}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookingSystem.Infrastructure.Tests", "tests\BookingSystem.Infrastructure.Tests\BookingSystem.Infrastructure.Tests.csproj", "{193EA280-BA4B-480B-91EB-4EC0A58AA889}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
