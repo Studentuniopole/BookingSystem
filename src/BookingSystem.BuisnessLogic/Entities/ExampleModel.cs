@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BookingSystem.BuisnessLogic.Entities
 {
-    public class ExampleModel : BaseEnitity
+    public class ExampleModel : BaseEntity
     {
         [Required]
         [MinLength(3)]        

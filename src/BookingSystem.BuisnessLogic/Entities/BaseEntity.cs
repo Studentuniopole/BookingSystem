@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BookingSystem.BuisnessLogic.Entities
 {
-    public abstract class BaseEnitity
+    public abstract class BaseEntity
     {
         public int Id { get; set; }
 
