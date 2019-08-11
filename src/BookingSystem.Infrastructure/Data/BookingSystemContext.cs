@@ -11,6 +11,11 @@ namespace BookingSystem.Infrastructure.Data
     {
         public BookingSystemContext(DbContextOptions<BookingSystemContext> options) : base(options) { }
 
+        public BookingSystemContext()
+        {
+
+        }
+
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -26,7 +31,7 @@ namespace BookingSystem.Infrastructure.Data
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
 
-           var customer = modelBuilder.Entity<Customer>();
+            var customer = modelBuilder.Entity<Customer>();
             customer.HasMany(x => x.Appointments).WithOne(x => x.Customer).HasForeignKey(x => x.CustomerId);
 
            // customer.HasKey(x=>x.Id);
