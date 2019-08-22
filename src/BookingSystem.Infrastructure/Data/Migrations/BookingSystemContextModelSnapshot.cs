@@ -21,13 +21,9 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CustomerId");
+                    b.Property<int>("CustomerId");
 
-                    b.Property<int?>("CustomerId1");
-
-                    b.Property<string>("EmployeeId");
-
-                    b.Property<int?>("EmployeeId1");
+                    b.Property<int>("EmployeeId");
 
                     b.Property<DateTime>("EndDate");
 
@@ -35,9 +31,9 @@ namespace BookingSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
-                    b.HasIndex("EmployeeId1");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("Appointments");
                 });
@@ -74,11 +70,13 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                 {
                     b.HasOne("BookingSystem.BuisnessLogic.Entities.Customer", "Customer")
                         .WithMany("Appointments")
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BookingSystem.BuisnessLogic.Entities.Employee", "Employee")
                         .WithMany("Appointments")
-                        .HasForeignKey("EmployeeId1");
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

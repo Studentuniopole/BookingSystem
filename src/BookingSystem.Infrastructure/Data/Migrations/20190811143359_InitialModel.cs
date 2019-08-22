@@ -43,37 +43,35 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    CustomerId = table.Column<string>(nullable: true),
-                    CustomerId1 = table.Column<int>(nullable: true),
-                    EmployeeId = table.Column<string>(nullable: true),
-                    EmployeeId1 = table.Column<int>(nullable: true)
+                    CustomerId = table.Column<int>(nullable: false),
+                    EmployeeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_Customers_CustomerId1",
-                        column: x => x.CustomerId1,
+                        name: "FK_Appointments_Customers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_Employees_EmployeeId1",
-                        column: x => x.EmployeeId1,
+                        name: "FK_Appointments_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_CustomerId1",
+                name: "IX_Appointments_CustomerId",
                 table: "Appointments",
-                column: "CustomerId1");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_EmployeeId1",
+                name: "IX_Appointments_EmployeeId",
                 table: "Appointments",
-                column: "EmployeeId1");
+                column: "EmployeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
