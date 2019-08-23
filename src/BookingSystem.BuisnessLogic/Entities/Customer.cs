@@ -6,6 +6,6 @@ namespace BookingSystem.BuisnessLogic.Entities
     {
         public string Name { get; set; }
         public string Surname { get; set; }
-        public ICollection<Appointment> Appointments { get; set; }
+        public virtual ICollection<Appointment> Appointments { get; set; }
     }
 }

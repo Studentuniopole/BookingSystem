@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace BookingSystem.Infrastructure.Data
 {
-    public class EfRepository<T> : IAsyncRepository<T> where T : BaseEntity
+    public class EfRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
          protected readonly BookingSystemContext _dbContext;
 
