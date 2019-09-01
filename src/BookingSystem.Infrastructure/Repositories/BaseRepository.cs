@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using BookingSystem.BuisnessLogic.Entities;
 using BookingSystem.BuisnessLogic.Interfaces;
@@ -49,12 +52,17 @@ namespace BookingSystem.Infrastructure.Repositories
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public IQueryable<T> FindBy(Expression<Func<T, bool>> spec)
+        {
+            return  _context.Set<T>().Where(spec).AsQueryable<T>();
+        }
+
         public Task<int> CountAsync(ISpecification<T> spec)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
+        public Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
         {
             throw new System.NotImplementedException();
         }

@@ -23,7 +23,7 @@ namespace BookingSystem.BuisnessLogic.Entities
         public DateTime Date { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public virtual AppointmentType AppointmentType {get; set;}
+        // public virtual AppointmentType AppointmentType {get; set;}
         
     }
 }
