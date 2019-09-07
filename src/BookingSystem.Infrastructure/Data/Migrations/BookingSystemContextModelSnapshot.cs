@@ -21,15 +21,25 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AppointmentStatus");
+
+                    b.Property<int>("AppointmentTypeId");
+
                     b.Property<int>("CustomerId");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description");
 
                     b.Property<int>("EmployeeId");
 
-                    b.Property<DateTime>("EndDate");
+                    b.Property<DateTime>("EndTime");
 
-                    b.Property<DateTime>("StartDate");
+                    b.Property<DateTime>("StartTime");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppointmentTypeId");
 
                     b.HasIndex("CustomerId");
 
@@ -38,14 +48,37 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.AppointmentType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Duration");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(60);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppointmentType");
+                });
+
             modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("EmailAddress")
+                        .IsRequired();
 
-                    b.Property<string>("Surname");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("LastName")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -57,9 +90,14 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(60);
 
-                    b.Property<string>("Surname");
+                    b.Property<string>("LastName")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -68,6 +106,11 @@ namespace BookingSystem.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.Appointment", b =>
                 {
+                    b.HasOne("BookingSystem.BuisnessLogic.Entities.AppointmentType", "AppointmentType")
+                        .WithMany()
+                        .HasForeignKey("AppointmentTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("BookingSystem.BuisnessLogic.Entities.Customer", "Customer")
                         .WithMany("Appointments")
                         .HasForeignKey("CustomerId")
