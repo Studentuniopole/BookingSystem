@@ -60,7 +60,7 @@ namespace BookingSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppointmentType");
+                    b.ToTable("AppointmentTypes");
                 });
 
             modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.Customer", b =>
@@ -72,9 +72,11 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(60);
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(60);
 
                     b.Property<string>("PhoneNumber")
@@ -99,9 +101,60 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .IsRequired();
 
+                    b.Property<int?>("SalonId");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("SalonId");
+
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.Salon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AddressApartmentNumber");
+
+                    b.Property<int>("AddressBuildingNumber");
+
+                    b.Property<string>("AddressStreet")
+                        .IsRequired();
+
+                    b.Property<string>("FullName")
+                        .HasMaxLength(60);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(60);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Salons");
+                });
+
+            modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.WorkingHour", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CloseHour");
+
+                    b.Property<int>("DayOfWeek");
+
+                    b.Property<int?>("SalonId");
+
+                    b.Property<DateTime>("StartHour");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SalonId");
+
+                    b.ToTable("WorkingHours");
                 });
 
             modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.Appointment", b =>
@@ -114,12 +167,26 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                     b.HasOne("BookingSystem.BuisnessLogic.Entities.Customer", "Customer")
                         .WithMany("Appointments")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BookingSystem.BuisnessLogic.Entities.Employee", "Employee")
                         .WithMany("Appointments")
                         .HasForeignKey("EmployeeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.Employee", b =>
+                {
+                    b.HasOne("BookingSystem.BuisnessLogic.Entities.Salon")
+                        .WithMany("Employees")
+                        .HasForeignKey("SalonId");
+                });
+
+            modelBuilder.Entity("BookingSystem.BuisnessLogic.Entities.WorkingHour", b =>
+                {
+                    b.HasOne("BookingSystem.BuisnessLogic.Entities.Salon")
+                        .WithMany("WorkingHours")
+                        .HasForeignKey("SalonId");
                 });
 #pragma warning restore 612, 618
         }

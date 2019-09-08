@@ -8,7 +8,7 @@ namespace BookingSystem.Infrastructure.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppointmentType",
+                name: "AppointmentTypes",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -18,7 +18,7 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppointmentType", x => x.Id);
+                    table.PrimaryKey("PK_AppointmentTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -27,14 +27,32 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    FirstName = table.Column<string>(maxLength: 60, nullable: true),
-                    LastName = table.Column<string>(maxLength: 60, nullable: true),
+                    FirstName = table.Column<string>(maxLength: 60, nullable: false),
+                    LastName = table.Column<string>(maxLength: 60, nullable: false),
                     PhoneNumber = table.Column<string>(nullable: false),
                     EmailAddress = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Salons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(maxLength: 60, nullable: false),
+                    FullName = table.Column<string>(maxLength: 60, nullable: true),
+                    AddressStreet = table.Column<string>(nullable: false),
+                    AddressBuildingNumber = table.Column<int>(nullable: false),
+                    AddressApartmentNumber = table.Column<int>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Salons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,11 +63,40 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(maxLength: 60, nullable: true),
                     LastName = table.Column<string>(maxLength: 60, nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: false)
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    SalonId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Salons_SalonId",
+                        column: x => x.SalonId,
+                        principalTable: "Salons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WorkingHours",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DayOfWeek = table.Column<int>(nullable: false),
+                    StartHour = table.Column<DateTime>(nullable: false),
+                    CloseHour = table.Column<DateTime>(nullable: false),
+                    SalonId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WorkingHours", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WorkingHours_Salons_SalonId",
+                        column: x => x.SalonId,
+                        principalTable: "Salons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -71,9 +118,9 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Appointments_AppointmentType_AppointmentTypeId",
+                        name: "FK_Appointments_AppointmentTypes_AppointmentTypeId",
                         column: x => x.AppointmentTypeId,
-                        principalTable: "AppointmentType",
+                        principalTable: "AppointmentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -81,13 +128,13 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Appointments_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -104,6 +151,16 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                 name: "IX_Appointments_EmployeeId",
                 table: "Appointments",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employees_SalonId",
+                table: "Employees",
+                column: "SalonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WorkingHours_SalonId",
+                table: "WorkingHours",
+                column: "SalonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -112,13 +169,19 @@ namespace BookingSystem.Infrastructure.Data.Migrations
                 name: "Appointments");
 
             migrationBuilder.DropTable(
-                name: "AppointmentType");
+                name: "WorkingHours");
+
+            migrationBuilder.DropTable(
+                name: "AppointmentTypes");
 
             migrationBuilder.DropTable(
                 name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Employees");
+
+            migrationBuilder.DropTable(
+                name: "Salons");
         }
     }
 }
